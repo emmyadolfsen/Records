@@ -1,0 +1,58 @@
+@model IEnumerable<Labb3.Models.Record>
+
+@{
+    ViewData["Title"] = "Album";
+}
+
+<h1>Album</h1>
+
+<p>
+    <a asp-action="Create">Lägg till nytt album</a>
+</p>
+<form asp-controller="Record" asp-action="Index">
+    <p>
+        Album: <input type="text" name="SearchString" />
+        <input type="submit" value="Sök" />
+    </p>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RecordName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Onloan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Artist)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RecordName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Onloan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Artist.ArtistName)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.RecordId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.RecordId">Delete</a>
+
+                @if (item.Onloan == false) // Check if item is loaned out
+                {
+                    <a asp-action="Edit" asp-route-id="@item.RecordId">| Edit</a>
+                }
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

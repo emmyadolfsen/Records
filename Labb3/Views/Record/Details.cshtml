@@ -1,0 +1,48 @@
+@model Labb3.Models.Record
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Record</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RecordName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RecordName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Onloan)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Onloan)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Artist)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Artist.ArtistName)
+        </dd>
+        <dt class="col-sm-2">
+            Utlånad till
+        </dt>
+        <dd class="col-sm-10">
+            @ViewData["LoanedOut"]
+        </dd>
+        <dt class="col-sm-2">
+            Datum
+        </dt>
+        <dd class="col-sm-10">
+            @ViewData["DateLoaned"]
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.RecordId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

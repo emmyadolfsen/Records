@@ -1,0 +1,45 @@
+@model IEnumerable<Labb3.Models.Onloan>
+
+@{
+    ViewData["Title"] = "Utlånade album";
+}
+
+<h1>Utlånade album</h1>
+
+<p>
+    <a asp-action="Create">Lägg till nytt lån</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FriendName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateRegistered)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Record)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FriendName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateRegistered)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Record.RecordName)
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.OnloanId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
