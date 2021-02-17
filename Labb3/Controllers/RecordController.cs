@@ -29,10 +29,12 @@ namespace Labb3.Controllers
                 var albums = from m in _context.Record
                              select m;
 
+                // Change letters to smaller case - get albums that contains seachstring
                 albums = albums.Where(s => s.RecordName.ToLower().Contains(searchString.ToLower())).Include(o => o.Artist);
                 return View(await albums.ToListAsync());
             }
 
+            // Lista with all albums and connected artists
             var musicContext = _context.Record.Include(o => o.Artist);
             return View(await musicContext.ToListAsync());
 
@@ -47,10 +49,11 @@ namespace Labb3.Controllers
                 return NotFound();
             }
 
-
+            // Get album and connected artist with matching id
             var @record = await _context.Record
                 .Include(o => o.Artist)
                 .FirstOrDefaultAsync(m => m.RecordId == id);
+
             if (@record == null)
             {
                 return NotFound();
@@ -59,17 +62,13 @@ namespace Labb3.Controllers
             // Check if album is loaned out
             if (@record.Onloan == true)
             {
-                /*
 
-                var albumid = onloan.RecordId; // Id of the borrowed album
-                var changebool = _context.Record    // Match with id in database
-                    .Where(p => p.RecordId == albumid)
-                    .FirstOrDefault();
-                */
-                // Get name of friend
+                // Get name of friend and date borrowed
                 var loan = _context.Onloan
                     .Where(m => m.RecordId == id)
                     .FirstOrDefault();
+
+                // Send data to view via ViewData
                 ViewData["LoanedOut"] = loan.FriendName;
                 ViewData["DateLoaned"] = loan.DateRegistered;
             }
@@ -79,6 +78,7 @@ namespace Labb3.Controllers
         // GET: Record/Create
         public IActionResult Create()
         {
+            // Selectlist with artists to choose from
             ViewData["ArtistId"] = new SelectList(_context.Artist, "ArtistId", "ArtistName");
             return View();
         }
@@ -118,6 +118,7 @@ namespace Labb3.Controllers
                 return NotFound();
             }
 
+            // Check for id in database
             var @record = await _context.Record.FindAsync(id);
             if (@record == null)
             {
@@ -141,6 +142,7 @@ namespace Labb3.Controllers
             {
                 try
                 {
+                    // Update database
                     _context.Update(@record);
                     await _context.SaveChangesAsync();
                 }

@@ -25,26 +25,6 @@ namespace Labb3.Controllers
             return View(await _context.Artist.ToListAsync());
         }
 
-        /*
-        // GET: Artist/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var artist = await _context.Artist
-                .FirstOrDefaultAsync(m => m.ArtistId == id);
-            if (artist == null)
-            {
-                return NotFound();
-            }
-
-            return View(artist);
-        }
-        */
-
         // GET: Artist/Create
         public IActionResult Create()
         {
